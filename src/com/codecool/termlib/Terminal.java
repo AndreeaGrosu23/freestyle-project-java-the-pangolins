@@ -1,11 +1,8 @@
 package com.codecool.termlib;
-import javax.naming.ldap.Control;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Terminal {
-
-
     /**
      * The beginning of control sequences.
      */
@@ -21,14 +18,14 @@ public class Terminal {
     /**
      * Command for moving the cursor.
      */
-//    private static final String MOVE = "H";
+    private static final String MOVE = "H";
     /**
      * Command for printing style settings.
      *
      * Handles foreground color, background color, and any other
      * styles, for example color brightness, or underlines.
      */
-//    private static final String STYLE = "m";
+    private static final String STYLE = "m";
 
     /**
      * Reset printing rules in effect to terminal defaults.
@@ -36,8 +33,9 @@ public class Terminal {
      * Reset the color, background color, and any other style
      * (i.e.: underlined, dim, bright) to the terminal defaults.
      */
-//    public void resetStyle() {
-//    }
+    public void resetStyle() {
+        System.out.println(CONTROL_CODE + 0 + STYLE);
+    }
 
     /**
      * Clear the whole screen.
@@ -57,8 +55,8 @@ public class Terminal {
      * @param x Column number.
      * @param y Row number.
      */
-//    public void moveTo(Integer x, Integer y) {
-//    }
+    public void moveTo(Integer x, Integer y) {
+    }
 
     /**
      * Set the foreground printing color.
@@ -67,8 +65,8 @@ public class Terminal {
      *
      * @param color The color to set.
      */
-//    public void setColor(Color color) {
-//    }
+    public void setColor(Color color) {
+    }
 
     /**
      * Set the background printing color.
@@ -77,8 +75,16 @@ public class Terminal {
      *
      * @param color The background color to set.
      */
-//    public void setBgColor(Color color) {
-//    }
+    public void setBgColor(Color color) {
+
+        switch (color){
+            case RED:
+//                System.out.println(Color.RED); //De ce nu merge ?
+                System.out.print("\033[42m"); //Asta merge
+                break;
+        }
+
+    }
 
     /**
      * Make printed text underlined.
@@ -87,8 +93,8 @@ public class Terminal {
      * underlined.  Cannot be turned off without turning off colors as
      * well.
      */
-//    public void setUnderline() {
-//    }
+    public void setUnderline() {
+    }
 
     /**
      * Move the cursor relatively.
@@ -99,8 +105,8 @@ public class Terminal {
      * @param direction Step the cursor in this direction.
      * @param amount Step the cursor this many times.
      */
-//    public void moveCursor(Direction direction, Integer amount) {
-//    }
+    public void moveCursor(Direction direction, Integer amount) {
+    }
 
     /**
      * Set the character diplayed under the current cursor position.
@@ -112,8 +118,8 @@ public class Terminal {
      * @param c the literal character to set for the current cursor
      * position.
      */
-//    public void setChar(char c) {
-//    }
+    public void setChar(char c) {
+    }
 
     /**
      * Helper function for sending commands to the terminal.
@@ -124,22 +130,46 @@ public class Terminal {
      * @param commandString The unique part of a command sequence.
      */
     private void command(String commandString) {
-        if (commandString.equals("1")){
-            clearScreen();
-        }else if (commandString.equals("0")){
+        if (commandString.equals("0")){
             System.out.println("Thank you for your visit !");
             System.out.println("Please don't come again");
             System.exit(0);
         }
+        else if (commandString.equals("1")){
+            clearScreen();
+        }
+        else if (commandString.equals("2")){
+            setBgColor(Color.RED);
+        }
+        else if (commandString.equals("3")){
+            resetStyle();
+        }
+//        else if (commandString.equals("4")){
+//            getGlyph();
+//        }
+        else if (commandString.equals("99")){
+            menuList();
+        }
     }
+
+    public char getGlyph(){
+        char glyph = '\u2661';
+        return glyph;
+    }
+
     public static void menuList(){
         System.out.println("Welcome to the wonderful program of The Pangolin's");
         System.out.println("below is the menu, feel free to choose anything");
-        System.out.println("Menu");
+        System.out.println();
         System.out.println("1. Clear screen");
-        System.out.println("0. Clear screen");
+        System.out.println("2. Set color: red");
+        System.out.println("3. Reset display settings");
+        System.out.println("4. Create special symbol");
+        System.out.println();
+        System.out.println("0. Exit the program");
         System.out.println();
     }
+
     public static void main(String[] args) {
 
         Scanner myMenu = new Scanner(System.in);  // Create a Scanner object
@@ -154,6 +184,5 @@ public class Terminal {
         }
 
     }
-
 
 }
