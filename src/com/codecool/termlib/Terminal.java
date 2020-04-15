@@ -1,4 +1,5 @@
 package com.codecool.termlib;
+
 import java.util.*;
 
 public class Terminal {
@@ -206,10 +207,11 @@ public class Terminal {
      * @param commandString The unique part of a command sequence.
      */
     private void command(String commandString) {
-        Scanner scanner = new Scanner(System.in);
-        
+
         List<String> userInputList = new ArrayList<String>(Arrays.asList(commandString.split(" ")));
-        
+
+        Scanner scanner = new Scanner(System.in);
+
         if (commandString.equals("0")){
             System.out.println("Thank you for your visit !");
             System.out.println("Please don't come again");
@@ -261,7 +263,6 @@ public class Terminal {
         else if (commandString.equals("7")){
             clearScreen();
             setChar(getGlyph());
-
         }
         else if (commandString.equals("8")){
             setUnderline();
@@ -276,6 +277,7 @@ public class Terminal {
      * Display program commands
      */
     public static void menuList(){
+        System.out.println();
         System.out.println("Welcome to the terminal emulator of The Pangolins");
         System.out.println("Below is the menu, feel free to choose anything!");
         System.out.println();
@@ -283,6 +285,7 @@ public class Terminal {
         System.out.println("2. Set color (choose bgcolor for background color and fgcolor for foreground color");
         System.out.println("Color options: black, red, yellow, green, blue, cyan, magenta, white");
         System.out.println("3. Reset display settings");
+        System.out.println("4. Create special symbol");
         System.out.println("5. Move the cursor");
         System.out.println("6. Display character cursor position");
         System.out.println("7. Display Glyph");
@@ -305,7 +308,7 @@ public class Terminal {
         menuList();
 
         while (runMenu){
-            System.out.println("Your choose is:");
+            System.out.println("Your choice is:");
             String optionSelected = myMenu.nextLine();  // Read user input
             terminal.command(optionSelected);
         }
