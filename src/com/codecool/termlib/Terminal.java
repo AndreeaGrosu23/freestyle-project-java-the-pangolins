@@ -103,7 +103,6 @@ public class Terminal {
      * @param color The background color to set.
      */
     public void setBgColor(Color color) {
-
         switch(color) {
             case BLACK:
                 System.out.print("\033[40m");
@@ -130,7 +129,6 @@ public class Terminal {
                 System.out.print("\033[47m");
                 break;
         }
-
     }
 
     /**
@@ -154,6 +152,20 @@ public class Terminal {
      * @param amount Step the cursor this many times.
      */
     public void moveCursor(Direction direction, Integer amount) {
+        switch (direction){
+            case UP:
+                System.out.println(CONTROL_CODE + amount + "A");
+                break;
+            case DOWN:
+                System.out.println(CONTROL_CODE + amount + "B");
+                break;
+            case FORWARD:
+                System.out.println(CONTROL_CODE + amount + "C");
+                break;
+            case BACKWARD:
+                System.out.println(CONTROL_CODE + amount + "D");
+                break;
+        }
     }
 
     /**
@@ -167,6 +179,23 @@ public class Terminal {
      * position.
      */
     public void setChar(char c) {
+        // Save the cursor position
+        System.out.println(CONTROL_CODE + "s");
+        // Move the cursor
+        moveCursor(Direction.UP, 5); //Needs moveTo function
+        // Display the character
+        System.out.println(c);
+        // Restores cursor position
+        System.out.println("\033"+ "7");
+    }
+
+    /**
+     * The ony scope for this function is to
+     * @return Black Heart Suit Emoji
+     */
+    public char getGlyph(){
+        char glyph = '\u2665';
+        return glyph;
     }
 
     /**
@@ -180,6 +209,8 @@ public class Terminal {
     private void command(String commandString) {
 
         List<String> userInputList = new ArrayList<String>(Arrays.asList(commandString.split(" ")));
+
+        Scanner scanner = new Scanner(System.in);
 
         if (commandString.equals("0")){
             System.out.println("Thank you for your visit !");
@@ -200,26 +231,56 @@ public class Terminal {
                 menuList();
             }
         }
+        else if (commandString.equals("4")){
+            resetStyle();
+        }
+        else if (commandString.equals("8")) {
+            setUnderline();
+        }
         else if (commandString.equals("3")){
             resetStyle();
         }
-//        else if (commandString.equals("4")){
-//            getGlyph();
-//        }
         else if (commandString.equals("5")){
-            setUnderline();
+            System.out.println("Direction: up , down, forward, backward");
+            String userDirection = scanner.nextLine().toUpperCase();
+            Direction resultDirection = null;
+            if (userDirection.equals("UP")){
+                resultDirection = Direction.UP;
+            }else if (userDirection.equals("DOWN")){
+                resultDirection = Direction.DOWN;
+            }else if (userDirection.equals("FORWARD")){
+                resultDirection = Direction.FORWARD;
+            }else if (userDirection.equals("BACKWARD")){
+                resultDirection = Direction.BACKWARD;
+            }else {
+                System.out.println("Write correct the direction");
+                main(null);
+            }
+            System.out.println("Amount");
+            Integer userAmount = scanner.nextInt();
+            moveCursor(resultDirection,userAmount);
+        }
+        else if (commandString.equals("6")){
+            System.out.println("Write the character:");
+            char userChar = scanner.nextLine().charAt(0);
+            clearScreen();
+            setChar(userChar);
+        }
+        else if (commandString.equals("7")){
+            clearScreen();
+            setChar(getGlyph());
         }
         else if (commandString.equals("99")){
             menuList();
         }
     }
 
-    public char getGlyph(){
-        char glyph = '\u2661';
-        return glyph;
-    }
 
+    /**
+     * Display program commands
+     */
     public static void menuList(){
+
         System.out.println();
         System.out.println("Welcome to the terminal emulator of The Pangolins");
         System.out.println("Below is the menu, feel free to choose anything!");
@@ -229,12 +290,20 @@ public class Terminal {
         System.out.println("Color options: black, red, yellow, green, blue, cyan, magenta, white");
         System.out.println("3. Reset display settings");
         System.out.println("4. Create special symbol");
-        System.out.println("5. Underline text");
+        System.out.println("5. Move the cursor");
+        System.out.println("6. Display character cursor position");
+        System.out.println("7. Display Glyph");
+        System.out.println("8. Underline text");
         System.out.println();
+        System.out.println("99.The menu");
         System.out.println("0. Exit the program");
         System.out.println();
     }
 
+    /**
+     * The main function it execute the menuList
+     * @param args null
+     */
     public static void main(String[] args) {
 
         Scanner myMenu = new Scanner(System.in);  // Create a Scanner object
