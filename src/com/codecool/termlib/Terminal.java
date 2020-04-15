@@ -231,12 +231,6 @@ public class Terminal {
                 menuList();
             }
         }
-        else if (commandString.equals("4")){
-            resetStyle();
-        }
-        else if (commandString.equals("8")) {
-            setUnderline();
-        }
         else if (commandString.equals("3")){
             resetStyle();
         }
@@ -270,6 +264,9 @@ public class Terminal {
             clearScreen();
             setChar(getGlyph());
         }
+        else if (commandString.equals("8")){
+            setUnderline();
+        }
         else if (commandString.equals("99")){
             menuList();
         }
@@ -280,7 +277,6 @@ public class Terminal {
      * Display program commands
      */
     public static void menuList(){
-
         System.out.println();
         System.out.println("Welcome to the terminal emulator of The Pangolins");
         System.out.println("Below is the menu, feel free to choose anything!");
