@@ -125,11 +125,22 @@ public class Terminal {
      * position.
      */
     public void setChar(char c) {
-
+        // Save the cursor position
+        System.out.println(CONTROL_CODE + "s");
+        // Move the cursor
+        moveCursor(Direction.UP, 5); //Needs moveTo function
+        // Display the character
+        System.out.println(c);
+        // Restores cursor position
+        System.out.println("\033"+ "7");
     }
 
+    /**
+     * The ony scope for this function is to
+     * @return Black Heart Suit Emoji
+     */
     public char getGlyph(){
-        char glyph = '\u2661';
+        char glyph = '\u2665';
         return glyph;
     }
 
@@ -177,13 +188,26 @@ public class Terminal {
             Integer userAmount = scanner.nextInt();
             moveCursor(resultDirection,userAmount);
         }
+        else if (commandString.equals("6")){
+            System.out.println("Write the character:");
+            char userChar = scanner.nextLine().charAt(0);
+            clearScreen();
+            setChar(userChar);
+        }
+        else if (commandString.equals("7")){
+            clearScreen();
+            setChar(getGlyph());
+
+        }
         else if (commandString.equals("99")){
             menuList();
         }
     }
 
 
-
+    /**
+     * Display program commands
+     */
     public static void menuList(){
         System.out.println("Welcome to the wonderful program of The Pangolins");
         System.out.println("below is the menu, feel free to choose anything");
@@ -191,13 +215,19 @@ public class Terminal {
         System.out.println("1. Clear screen");
         System.out.println("2. Set color: red");
         System.out.println("3. Reset display settings");
-        System.out.println("4. Create special symbol");
         System.out.println("5. Move the cursor");
+        System.out.println("6. Display character cursor position");
+        System.out.println("7. Display Glyph");
         System.out.println();
+        System.out.println("99.The menu");
         System.out.println("0. Exit the program");
         System.out.println();
     }
 
+    /**
+     * The main function it execute the menuList
+     * @param args null
+     */
     public static void main(String[] args) {
 
         Scanner myMenu = new Scanner(System.in);  // Create a Scanner object
