@@ -1,5 +1,4 @@
 package com.codecool.termlib;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Terminal {
@@ -77,13 +76,6 @@ public class Terminal {
      */
     public void setBgColor(Color color) {
 
-        switch (color){
-            case RED:
-//                System.out.println(Color.RED); //De ce nu merge ?
-                System.out.print("\033[42m"); //Asta merge
-                break;
-        }
-
     }
 
     /**
@@ -106,6 +98,20 @@ public class Terminal {
      * @param amount Step the cursor this many times.
      */
     public void moveCursor(Direction direction, Integer amount) {
+        switch (direction){
+            case UP:
+                System.out.println(CONTROL_CODE + amount + "A");
+                break;
+            case DOWN:
+                System.out.println(CONTROL_CODE + amount + "B");
+                break;
+            case FORWARD:
+                System.out.println(CONTROL_CODE + amount + "C");
+                break;
+            case BACKWARD:
+                System.out.println(CONTROL_CODE + amount + "D");
+                break;
+        }
     }
 
     /**
@@ -119,6 +125,12 @@ public class Terminal {
      * position.
      */
     public void setChar(char c) {
+
+    }
+
+    public char getGlyph(){
+        char glyph = '\u2661';
+        return glyph;
     }
 
     /**
@@ -130,6 +142,7 @@ public class Terminal {
      * @param commandString The unique part of a command sequence.
      */
     private void command(String commandString) {
+        Scanner scanner = new Scanner(System.in);
         if (commandString.equals("0")){
             System.out.println("Thank you for your visit !");
             System.out.println("Please don't come again");
@@ -138,33 +151,48 @@ public class Terminal {
         else if (commandString.equals("1")){
             clearScreen();
         }
-        else if (commandString.equals("2")){
-            setBgColor(Color.RED);
-        }
+//        else if (commandString.equals("2")){
+//            setBgColor(Color.RED);
+//        }
         else if (commandString.equals("3")){
             resetStyle();
         }
-//        else if (commandString.equals("4")){
-//            getGlyph();
-//        }
+        else if (commandString.equals("5")){
+            System.out.println("Direction: up , down, forward, backward");
+            String userDirection = scanner.nextLine().toUpperCase();
+            Direction resultDirection = null;
+            if (userDirection.equals("UP")){
+                resultDirection = Direction.UP;
+            }else if (userDirection.equals("DOWN")){
+                resultDirection = Direction.DOWN;
+            }else if (userDirection.equals("FORWARD")){
+                resultDirection = Direction.FORWARD;
+            }else if (userDirection.equals("BACKWARD")){
+                resultDirection = Direction.BACKWARD;
+            }else {
+                System.out.println("Write correct the direction");
+                main(null);
+            }
+            System.out.println("Amount");
+            Integer userAmount = scanner.nextInt();
+            moveCursor(resultDirection,userAmount);
+        }
         else if (commandString.equals("99")){
             menuList();
         }
     }
 
-    public char getGlyph(){
-        char glyph = '\u2661';
-        return glyph;
-    }
+
 
     public static void menuList(){
-        System.out.println("Welcome to the wonderful program of The Pangolin's");
+        System.out.println("Welcome to the wonderful program of The Pangolins");
         System.out.println("below is the menu, feel free to choose anything");
         System.out.println();
         System.out.println("1. Clear screen");
         System.out.println("2. Set color: red");
         System.out.println("3. Reset display settings");
         System.out.println("4. Create special symbol");
+        System.out.println("5. Move the cursor");
         System.out.println();
         System.out.println("0. Exit the program");
         System.out.println();
