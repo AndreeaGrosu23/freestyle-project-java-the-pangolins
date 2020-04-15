@@ -1,5 +1,5 @@
 package com.codecool.termlib;
-import java.util.Scanner;
+import java.util.*;
 
 public class Terminal {
     /**
@@ -55,6 +55,7 @@ public class Terminal {
      * @param y Row number.
      */
     public void moveTo(Integer x, Integer y) {
+        System.out.print(CONTROL_CODE+x+';'+y+'f');
     }
 
     /**
@@ -65,6 +66,32 @@ public class Terminal {
      * @param color The color to set.
      */
     public void setColor(Color color) {
+        switch(color) {
+            case BLACK:
+                System.out.print("\033[30m");
+                break;
+            case RED:
+                System.out.print("\033[31m");
+                break;
+            case GREEN:
+                System.out.print("\033[32m");
+                break;
+            case YELLOW:
+                System.out.print("\033[33m");
+                break;
+            case BLUE:
+                System.out.print("\033[34m");
+                break;
+            case MAGENTA:
+                System.out.print("\033[35m");
+                break;
+            case CYAN:
+                System.out.print("\033[36m");
+                break;
+            case WHITE:
+                System.out.print("\033[37m");
+                break;
+        }
     }
 
     /**
@@ -75,7 +102,32 @@ public class Terminal {
      * @param color The background color to set.
      */
     public void setBgColor(Color color) {
-
+        switch(color) {
+            case BLACK:
+                System.out.print("\033[40m");
+                break;
+            case RED:
+                System.out.print("\033[41m");
+                break;
+            case GREEN:
+                System.out.print("\033[42m");
+                break;
+            case YELLOW:
+                System.out.print("\033[43m");
+                break;
+            case BLUE:
+                System.out.print("\033[44m");
+                break;
+            case MAGENTA:
+                System.out.print("\033[45m");
+                break;
+            case CYAN:
+                System.out.print("\033[46m");
+                break;
+            case WHITE:
+                System.out.print("\033[47m");
+                break;
+        }
     }
 
     /**
@@ -86,6 +138,7 @@ public class Terminal {
      * well.
      */
     public void setUnderline() {
+        System.out.print("\033[4m");
     }
 
     /**
@@ -154,6 +207,9 @@ public class Terminal {
      */
     private void command(String commandString) {
         Scanner scanner = new Scanner(System.in);
+        
+        List<String> userInputList = new ArrayList<String>(Arrays.asList(commandString.split(" ")));
+        
         if (commandString.equals("0")){
             System.out.println("Thank you for your visit !");
             System.out.println("Please don't come again");
@@ -162,9 +218,17 @@ public class Terminal {
         else if (commandString.equals("1")){
             clearScreen();
         }
-//        else if (commandString.equals("2")){
-//            setBgColor(Color.RED);
-//        }
+        else if (userInputList.get(0).toLowerCase().equals("2")){
+            String color = userInputList.get(2).toUpperCase();
+            if (userInputList.get(1).toLowerCase().equals("bgcolor")) {
+                setBgColor(Color.valueOf(color));
+            } else if (userInputList.get(1).toLowerCase().equals("fgcolor")) {
+                setColor(Color.valueOf(color));
+            } else {
+                System.out.println("Invalid command");
+                menuList();
+            }
+        }
         else if (commandString.equals("3")){
             resetStyle();
         }
@@ -199,6 +263,9 @@ public class Terminal {
             setChar(getGlyph());
 
         }
+        else if (commandString.equals("8")){
+            setUnderline();
+        }
         else if (commandString.equals("99")){
             menuList();
         }
@@ -209,15 +276,17 @@ public class Terminal {
      * Display program commands
      */
     public static void menuList(){
-        System.out.println("Welcome to the wonderful program of The Pangolins");
-        System.out.println("below is the menu, feel free to choose anything");
+        System.out.println("Welcome to the terminal emulator of The Pangolins");
+        System.out.println("Below is the menu, feel free to choose anything!");
         System.out.println();
         System.out.println("1. Clear screen");
-        System.out.println("2. Set color: red");
+        System.out.println("2. Set color (choose bgcolor for background color and fgcolor for foreground color");
+        System.out.println("Color options: black, red, yellow, green, blue, cyan, magenta, white");
         System.out.println("3. Reset display settings");
         System.out.println("5. Move the cursor");
         System.out.println("6. Display character cursor position");
         System.out.println("7. Display Glyph");
+        System.out.println("8. Underline text");
         System.out.println();
         System.out.println("99.The menu");
         System.out.println("0. Exit the program");
