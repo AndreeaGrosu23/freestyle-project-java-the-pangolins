@@ -242,7 +242,7 @@ public class Terminal {
                 moveTo(columnData,rowData);
 
             }catch (Exception e){
-                System.out.println("Invalid command - Please insert number");
+                System.out.println("Invalid command - Please write number");
                 main(null);
             }
         }
@@ -259,7 +259,7 @@ public class Terminal {
             }else if (userDirection.equals("BACKWARD")){
                 resultDirection = Direction.BACKWARD;
             }else {
-                System.out.println("Write correct the direction");
+                System.out.println("Invalid command  - Please write correct the direction");
                 main(null);
             }
             System.out.println("Amount");
