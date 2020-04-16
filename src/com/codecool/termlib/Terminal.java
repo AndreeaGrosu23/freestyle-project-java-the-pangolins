@@ -222,9 +222,10 @@ public class Terminal {
         }
         else if (userInputList.get(0).toLowerCase().equals("2")){
             if (userInputList.size() == 3) {
-                String color = userInputList.get(2).toUpperCase();
+                String color = userInputList.get(2).toLowerCase();
                 if (userInputList.get(1).toLowerCase().equals("bgcolor")) {
                     if (color.equals("black") || color.equals("red") || color.equals("yellow") || color.equals("green") || color.equals("blue") || color.equals("cyan") || color.equals("magenta") || color.equals("white")) {
+                        color = userInputList.get(2).toUpperCase();
                         setBgColor(Color.valueOf(color));
                     } else {
                         System.out.println("Invalid command");
@@ -232,6 +233,7 @@ public class Terminal {
                     }
                 } else if (userInputList.get(1).toLowerCase().equals("fgcolor")) {
                     if (color.equals("black") || color.equals("red") || color.equals("yellow") || color.equals("green") || color.equals("blue") || color.equals("cyan") || color.equals("magenta") || color.equals("white")) {
+                        color = userInputList.get(2).toUpperCase();
                         setColor(Color.valueOf(color));
                     } else {
                         System.out.println("Invalid command");
@@ -319,7 +321,7 @@ public class Terminal {
         System.out.println("7. Display Glyph -> type 7");
         System.out.println("8. Underline text -> type 8");
         System.out.println();
-        System.out.println("9.The menu -> type 9");
+        System.out.println("9. The menu -> type 9");
         System.out.println("0. Exit the program -> type 0");
         System.out.println();
     }
