@@ -221,14 +221,29 @@ public class Terminal {
             clearScreen();
         }
         else if (userInputList.get(0).toLowerCase().equals("2")){
-            String color = userInputList.get(2).toUpperCase();
-            if (userInputList.get(1).toLowerCase().equals("bgcolor")) {
-                setBgColor(Color.valueOf(color));
-            } else if (userInputList.get(1).toLowerCase().equals("fgcolor")) {
-                setColor(Color.valueOf(color));
+            if (userInputList.size() == 3) {
+                String color = userInputList.get(2).toUpperCase();
+                if (userInputList.get(1).toLowerCase().equals("bgcolor")) {
+                    if (color.equals("black") || color.equals("red") || color.equals("yellow") || color.equals("green") || color.equals("blue") || color.equals("cyan") || color.equals("magenta") || color.equals("white")) {
+                        setBgColor(Color.valueOf(color));
+                    } else {
+                        System.out.println("Invalid command");
+                        main(null);
+                    }
+                } else if (userInputList.get(1).toLowerCase().equals("fgcolor")) {
+                    if (color.equals("black") || color.equals("red") || color.equals("yellow") || color.equals("green") || color.equals("blue") || color.equals("cyan") || color.equals("magenta") || color.equals("white")) {
+                        setColor(Color.valueOf(color));
+                    } else {
+                        System.out.println("Invalid command");
+                        main(null);
+                    }
+                } else {
+                    System.out.println("Invalid command");
+                    main(null);
+                }
             } else {
-                System.out.println("Invalid command");
-                menuList();
+                 System.out.println("Invalid command");
+                 main(null);
             }
         }
         else if (commandString.equals("3")){
