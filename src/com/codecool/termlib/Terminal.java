@@ -182,7 +182,7 @@ public class Terminal {
         // Save the cursor position
         System.out.println(CONTROL_CODE + "s");
         // Move the cursor
-        moveCursor(Direction.UP, 5); //Needs moveTo function
+        command("4");
         // Display the character
         System.out.println(c);
         // Restores cursor position
@@ -190,7 +190,7 @@ public class Terminal {
     }
 
     /**
-     * The ony scope for this function is to
+     * The only scope for this function is to
      * @return Black Heart Suit Emoji
      */
     public char getGlyph(){
@@ -233,6 +233,18 @@ public class Terminal {
         }
         else if (commandString.equals("3")){
             resetStyle();
+        }else if (commandString.equals("4")){
+            System.out.println("Write column number:");
+            try{
+                Integer columnData = scanner.nextInt();
+                System.out.println("Write row number:");
+                Integer rowData = scanner.nextInt();
+                moveTo(columnData,rowData);
+
+            }catch (Exception e){
+                System.out.println("Invalid command - Please insert number");
+                main(null);
+            }
         }
         else if (commandString.equals("5")){
             System.out.println("Direction: up , down, forward, backward");
@@ -267,7 +279,7 @@ public class Terminal {
         else if (commandString.equals("8")){
             setUnderline();
         }
-        else if (commandString.equals("99")){
+        else if (commandString.equals("9")){
             menuList();
         }
     }
@@ -281,18 +293,19 @@ public class Terminal {
         System.out.println("Welcome to the terminal emulator of The Pangolins");
         System.out.println("Below is the menu, feel free to choose anything!");
         System.out.println();
-        System.out.println("1. Clear screen");
+        System.out.println("1. Clear screen -> type 1");
         System.out.println("2. Set color (choose bgcolor for background color and fgcolor for foreground color");
         System.out.println("Color options: black, red, yellow, green, blue, cyan, magenta, white");
-        System.out.println("3. Reset display settings");
-        System.out.println("4. Create special symbol");
-        System.out.println("5. Move the cursor");
-        System.out.println("6. Display character cursor position");
-        System.out.println("7. Display Glyph");
-        System.out.println("8. Underline text");
+        System.out.println("->type example: 2 bgcolor red");
+        System.out.println("3. Reset display settings -> type 3");
+        System.out.println("4. Move cursor to x and y -> type 4");
+        System.out.println("5. Move the cursor -> type 5");
+        System.out.println("6. Display character on cursor position -> type 6");
+        System.out.println("7. Display Glyph -> type 7");
+        System.out.println("8. Underline text -> type 8");
         System.out.println();
-        System.out.println("99.The menu");
-        System.out.println("0. Exit the program");
+        System.out.println("9.The menu -> type 9");
+        System.out.println("0. Exit the program -> type 0");
         System.out.println();
     }
 
